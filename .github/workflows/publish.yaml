@@ -1,30 +1,60 @@
 name: Publish the 'iraf-community' Docker image
 on:
   push:
-    paths:
-      - dockerfiles/Dockerfile
+    branches: ['main']
+#     paths:
+#       - "dockerfiles/Dockerfile"
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
 env:
   VERSION: 0.1
+  REGISTRY: ghcr.io
   REPO: rsouza01
   IMAGE_NAME: iraf-community
 jobs:
-  publish-base-image:
+  publish-image:
+    name: Release image
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
     steps:
       - uses: actions/checkout@v2
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+
       - name: Build the 'iraf-community' Docker image
         run: |
           docker build . \
-            --tag ghcr.io/${REPO}/${IMAGE_NAME}:latest \
-            --tag ghcr.io/${REPO}/${IMAGE_NAME}:${VERSION} \
-            -f dockerfiles/Dockerfile-base
+            --tag ${{ env.REGISTRY }}/${REPO}/${IMAGE_NAME}:latest \
+            --tag ${{ env.REGISTRY }}/${REPO}/${IMAGE_NAME}:${VERSION} \
+            -f dockerfiles/Dockerfile
             
-          # docker run ghcr.io/deselikem/hello-docker-gcr-demo:latest
-          docker push ghcr.io/${REPO}/${IMAGE_NAME}:latest
-          docker push ghcr.io/${REPO}/${IMAGE_NAME}:${VERSION}
+          # docker run ${{ env.REGISTRY }}/deselikem/hello-docker-gcr-demo:latest
+          docker push ${{ env.REGISTRY }}/${REPO}/${IMAGE_NAME}:latest
+          docker push ${{ env.REGISTRY }}/${REPO}/${IMAGE_NAME}:${VERSION}
+
+  release:
+    name: Release pushed tag
+    needs: [ publish-image ]
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # tag: ${{ github.ref_name }}
+          tag: "v${{ env.VERSION }}"
+        run: |
+          gh release create "${tag}" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${tag#v}" \
+              --generate-notes
