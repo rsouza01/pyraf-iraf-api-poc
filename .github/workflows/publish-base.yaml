@@ -8,12 +8,13 @@ on:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 env:
-  VERSION: 0.1
+  VERSION: 0.2
   REGISTRY: ghcr.io
   REPO: rsouza01
   IMAGE_NAME: iraf-community-base
 jobs:
   publish-base-image:
+    name: Release base image
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -41,18 +42,18 @@ jobs:
           docker push ${{ env.REGISTRY }}/${REPO}/${IMAGE_NAME}:latest
           docker push ${{ env.REGISTRY }}/${REPO}/${IMAGE_NAME}:${VERSION}
 
-  release:
-    name: Release pushed tag
-    needs: [ publish-base-image ]
+  # release:
+  #   name: Release pushed tag
+  #   needs: [ publish-base-image ]
 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-        run: |
-          gh release create "$tag" \
-              --repo="$GITHUB_REPOSITORY" \
-              --title="${tag#v}" \
-              --generate-notes
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Create release
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         tag: ${{ github.ref_name }}
+  #       run: |
+  #         gh release create "$tag" \
+  #             --repo="$GITHUB_REPOSITORY" \
+  #             --title="${tag#v}" \
+  #             --generate-notes
