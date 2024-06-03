@@ -1,8 +1,8 @@
 # FROM tepickering/iraf-community-base:latest
 FROM ghcr.io/rsouza01/iraf-community-base:0.4
 
-ENV USER_ID developer
-ENV GROUP_ID developer
+ARG USER_ID=developer
+ARG GROUP_ID=developer
 
 
 RUN adduser \
