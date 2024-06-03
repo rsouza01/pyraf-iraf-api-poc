@@ -1,0 +1,30 @@
+name: publish
+on:
+  push:
+    paths:
+      - dockerfiles/Dockerfile
+env:
+  VERSION: 0.1
+  REPO: rsouza01
+  IMAGE_NAME: iraf-community
+jobs:
+  publish-base-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build the 'iraf-community' Docker image
+        run: |
+          docker build . \
+            --tag ghcr.io/${REPO}/${IMAGE_NAME}:latest \
+            --tag ghcr.io/${REPO}/${IMAGE_NAME}:${VERSION} \
+            -f dockerfiles/Dockerfile-base
+            
+          # docker run ghcr.io/deselikem/hello-docker-gcr-demo:latest
+          docker push ghcr.io/${REPO}/${IMAGE_NAME}:latest
+          docker push ghcr.io/${REPO}/${IMAGE_NAME}:${VERSION}
