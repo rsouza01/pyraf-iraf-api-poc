@@ -1,13 +1,9 @@
-# FROM ubuntu:20.04
 FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 ENV IRAF_ARTIFACT v2.0+2020.06.15.tar.gz
 
-
-# RUN echo "tzdata tzdata/Areas select America" >> preseed.txt
-# RUN echo "tzdata tzdata/Zones/America select Phoenix" >> preseed.txt
 RUN echo "tzdata tzdata/Areas select Europe" >> preseed.cfg
 RUN echo "tzdata tzdata/Zones/Europe select Brussels" >> preseed.cfg
 
