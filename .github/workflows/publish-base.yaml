@@ -8,7 +8,7 @@ on:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 env:
-  VERSION: 0.3
+  VERSION: 0.4
   REGISTRY: ghcr.io
   REPO: rsouza01
   IMAGE_NAME: iraf-community-base
@@ -51,9 +51,10 @@ jobs:
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
+          # tag: ${{ github.ref_name }}
+          tag: Version ${VERSION}
         run: |
-          gh release create "$tag" \
+          gh release create "${tag}" \
               --repo="$GITHUB_REPOSITORY" \
               --title="${tag#v}" \
               --generate-notes
