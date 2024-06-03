@@ -12,8 +12,8 @@ RUN echo "tzdata tzdata/Zones/Europe select Brussels" >> preseed.cfg
 RUN debconf-set-selections preseed.cfg
 
 RUN apt -y update && apt -y upgrade && \
-    apt -y install wget xterm flex saods9 tclxml cpl-plugin-giraf cpl-plugin-giraf-calib cpl-plugin-giraf-doc iraf iraf-dev iraf-noao
-    # iraf-noao-dev iraf-rvsao iraf-wcstools python3-pyraf gcc make libncurses-dev tcl-dev libxaw7-dev libxmu-dev xaw3dg-dev libxpm-dev byacc
+    apt -y install wget xterm flex saods9 tclxml cpl-plugin-giraf cpl-plugin-giraf-calib cpl-plugin-giraf-doc iraf iraf-dev iraf-noao \
+    iraf-noao-dev iraf-rvsao iraf-wcstools python3-pyraf gcc make libncurses-dev tcl-dev libxaw7-dev libxmu-dev xaw3dg-dev libxpm-dev byacc
 
     # && \ rm -rf /var/lib/apt/lists/*```
 
