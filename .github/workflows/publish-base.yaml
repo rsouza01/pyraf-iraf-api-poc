@@ -52,7 +52,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # tag: ${{ github.ref_name }}
-          tag: "v${VERSION}"
+          tag: "v${{ env.VERSION }}"
         run: |
           gh release create "${tag}" \
               --repo="$GITHUB_REPOSITORY" \
