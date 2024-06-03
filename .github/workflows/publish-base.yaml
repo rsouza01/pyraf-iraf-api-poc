@@ -3,7 +3,7 @@ on:
   push:
     branches: ['main']
 #     paths:
-#       - dockerfiles/Dockerfile-base
+#       - "dockerfiles/Dockerfile-base"
 env:
   VERSION: 0.1
   REPO: rsouza01
