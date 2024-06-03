@@ -6,6 +6,7 @@ on:
 #       - "dockerfiles/Dockerfile-base"
 env:
   VERSION: 0.1
+  REGISTRY: ghcr.io
   REPO: rsouza01
   IMAGE_NAME: iraf-community-base
 jobs:
@@ -14,18 +15,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+
       - name: Build the 'iraf-community-base' Docker image
         run: |
           docker build . \
-            --tag ghcr.io/${REPO}/${IMAGE_NAME}:latest \
-            --tag ghcr.io/${REPO}/${IMAGE_NAME}:${VERSION} \
+            --tag ${{ env.REGISTRY }}/${REPO}/${IMAGE_NAME}:latest \
+            --tag ${{ env.REGISTRY }}/${REPO}/${IMAGE_NAME}:${VERSION} \
             -f dockerfiles/Dockerfile-base
             
-          # docker run ghcr.io/deselikem/hello-docker-gcr-demo:latest
-          docker push ghcr.io/${REPO}/${IMAGE_NAME}:latest
-          docker push ghcr.io/${REPO}/${IMAGE_NAME}:${VERSION}
+          # docker run ${{ env.REGISTRY }}/deselikem/hello-docker-gcr-demo:latest
+          docker push ${{ env.REGISTRY }}/${REPO}/${IMAGE_NAME}:latest
+          docker push ${{ env.REGISTRY }}/${REPO}/${IMAGE_NAME}:${VERSION}
