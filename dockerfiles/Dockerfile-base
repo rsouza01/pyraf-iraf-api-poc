@@ -7,15 +7,12 @@ ENV DEBCONF_NONINTERACTIVE_SEEN true
 # RUN echo "tzdata tzdata/Areas select America" >> preseed.txt
 # RUN echo "tzdata tzdata/Zones/America select Phoenix" >> preseed.txt
 RUN echo "tzdata tzdata/Areas select Europe" >> preseed.cfg
-RUN echo "tzdata tzdata/Zones/America select Brussels" >> preseed.cfg
-
-
+RUN echo "tzdata tzdata/Zones/Europe select Brussels" >> preseed.cfg
 
 RUN debconf-set-selections preseed.cfg
 
 RUN apt -y update && apt -y upgrade && \
-    apt -y install wget xterm flex saods9 tclxml cpl-plugin-giraf cpl-plugin-giraf-calib cpl-plugin-giraf-doc 
-    # iraf iraf-dev iraf-noao \
+    apt -y install wget xterm flex saods9 tclxml cpl-plugin-giraf cpl-plugin-giraf-calib cpl-plugin-giraf-doc iraf iraf-dev iraf-noao
     # iraf-noao-dev iraf-rvsao iraf-wcstools python3-pyraf gcc make libncurses-dev tcl-dev libxaw7-dev libxmu-dev xaw3dg-dev libxpm-dev byacc
 
     # && \ rm -rf /var/lib/apt/lists/*```
