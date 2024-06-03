@@ -43,6 +43,8 @@ jobs:
 
   release:
     name: Release pushed tag
+    needs: [ publish-base-image ]
+
     runs-on: ubuntu-latest
     steps:
       - name: Create release
