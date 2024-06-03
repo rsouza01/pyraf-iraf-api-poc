@@ -7,8 +7,9 @@ ARG GROUP_ID=developer
 
 RUN adduser \
     --home /home/${USER_ID} \
-    --password "" \
     ${USER_ID}
+
+RUN passwd -d ${USER_ID}
 
 RUN groupadd -f -g ${GROUP_ID} iraf && \
     useradd -l -u ${USER_ID} -g iraf iraf
