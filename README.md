@@ -7,3 +7,4 @@
 - https://iraf-community.github.io/pyraf.html
 - https://medium.com/@mohit_kmr/production-ready-fastapi-application-from-0-to-1-part-1-f4e2b153cd54
 - https://realpython.com/dependency-management-python-poetry/
+- https://github.com/iam-abbas/FastAPI-Production-Boilerplate
