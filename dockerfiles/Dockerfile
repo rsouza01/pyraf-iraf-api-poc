@@ -6,8 +6,7 @@ ARG GROUP_ID=developer
 
 
 RUN adduser \
-    --home-dir /home/${USER_ID} \
-    --user-group \
+    --home /home/${USER_ID} \
     --password "" \
     ${USER_ID}
 
