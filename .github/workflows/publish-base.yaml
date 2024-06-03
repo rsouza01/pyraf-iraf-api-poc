@@ -1,4 +1,4 @@
-name: publish
+name: Publish the 'iraf-community-base' Docker image
 on:
   push:
     paths:
