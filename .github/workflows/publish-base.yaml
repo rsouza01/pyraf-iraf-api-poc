@@ -1,8 +1,9 @@
 name: Publish the 'iraf-community-base' Docker image
 on:
   push:
-    paths:
-      - dockerfiles/Dockerfile-base
+    branches: ['main']
+#     paths:
+#       - dockerfiles/Dockerfile-base
 env:
   VERSION: 0.1
   REPO: rsouza01
