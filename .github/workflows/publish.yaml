@@ -8,7 +8,7 @@ on:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 env:
-  VERSION: 0.1
+  VERSION: 0.2
   REGISTRY: ghcr.io
   REPO: rsouza01
   IMAGE_NAME: iraf-community
