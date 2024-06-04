@@ -14,3 +14,4 @@ RUN mkdir -p /home/iraf && chown -R iraf:iraf /home/iraf
 
 USER iraf
 ENV HOME /home/iraf
+ENV USER iraf
